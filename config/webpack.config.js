@@ -63,6 +63,9 @@ const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
+// 添加 less 解析规则
+const lessRegex = /\.less$/;
+const lessModuleRegex = /\.module\.less$/;
 
 const hasJsxRuntime = (() => {
   if (process.env.DISABLE_NEW_JSX_TRANSFORM === 'true') {
@@ -534,6 +537,40 @@ module.exports = function (webpackEnv) {
                 'sass-loader'
               ),
             },
+            //less配置    可以直接复制上面的sass配置之后改成less就行
+              {
+                test: lessRegex,
+                exclude: lessModuleRegex,
+                use: getStyleLoaders(
+                    {
+                        importLoaders: 3,
+                        sourceMap: isEnvProduction
+                            ? shouldUseSourceMap
+                            : isEnvDevelopment,
+                    },
+                    'less-loader'
+                ),
+                // Don't consider CSS imports dead code even if the
+                // containing package claims to have no side effects.
+                // Remove this when webpack adds a warning or an error for this.
+                // See https://github.com/webpack/webpack/issues/6571
+                sideEffects: true,
+              },
+              {
+                test: lessModuleRegex,
+                use: getStyleLoaders(
+                    {
+                        importLoaders: 3,
+                        sourceMap: isEnvProduction
+                            ? shouldUseSourceMap
+                            : isEnvDevelopment,
+                        modules: {
+                            getLocalIdent: getCSSModuleLocalIdent,
+                        },
+                    },
+                    'less-loader'
+                ),
+              },
             // "file" loader makes sure those assets get served by WebpackDevServer.
             // When you `import` an asset, you get its (virtual) filename.
             // In production, they would get copied to the `build` folder.

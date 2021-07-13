@@ -1,0 +1,35 @@
+// eslint-disable-next-line import/no-anonymous-default-export
+export default [
+    {
+        title:'首页',//菜单标题名称
+        key:'/admin/home',//对应的path
+        icon:'home'//图标名称
+    },
+    {
+        title:"商品",
+        key:'/admin/products',
+        icon:'appstore',
+        children:[//子菜单列表
+            {
+                title:'分类管理',//菜单标题名称
+                key:'/admin/category',//对应的path
+                icon:'bars'//图标名称
+            },
+            {
+                title:'商品管理',//菜单标题名称
+                key:'/admin/product',//对应的path
+                icon:'tool',//图标名称
+            },
+        ]
+    },
+    {
+        title:'用户管理',//菜单标题名称
+        key:'/admin/user',//对应的path
+        icon:'home'//图标名称
+    },
+    {
+        title:'角色管理',//菜单标题名称
+        key:'/admin/role',//对应的path
+        icon:'safety'//图标名称
+    },
+]
